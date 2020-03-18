@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.dao.FollowMapper">
+  <resultMap id="BaseResultMap" type="com.ex.model.Follow">
+    <id column="follow_id" jdbcType="INTEGER" property="followId" />
+    <result column="follow_time" jdbcType="TIMESTAMP" property="followTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+  </resultMap>
+  <resultMap id="FollowList" type="com.ex.model.FollowList">
+    <id column="follow_id" jdbcType="INTEGER" property="followId" />
+    <result column="follow_time" jdbcType="TIMESTAMP" property="followTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_original_price" jdbcType="DECIMAL" property="productOriginalPrice" />
+    <result column="product_current_price" jdbcType="DECIMAL" property="productCurrentPrice" />
+    <result column="product_stock" jdbcType="VARCHAR" property="productStock" />
+    <result column="product_picture" jdbcType="VARCHAR" property="productPicture" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    follow_id, follow_time, user_id, product_id
+  </sql>
+  <select id="selectfollowListByUserId" parameterType="java.lang.Integer" resultMap="FollowList">
+    SELECT
+      *
+    FROM
+      follow,
+      product
+    WHERE
+      follow.product_id = product.product_id
+      AND follow.user_id = #{uid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from follow
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from follow
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ex.model.Follow">
+    insert into follow (follow_id, user_id,
+      product_id)
+    values (#{followId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+      #{productId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ex.model.Follow">
+    insert into follow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="followId != null">
+        follow_id,
+      </if>
+      <if test="followTime != null">
+        follow_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="followId != null">
+        #{followId,jdbcType=INTEGER},
+      </if>
+      <if test="followTime != null">
+        #{followTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Follow">
+    update follow
+    <set>
+      <if test="followTime != null">
+        follow_time = #{followTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ex.model.Follow">
+    update follow
+    set follow_time = #{followTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER}
+    where follow_id = #{followId,jdbcType=INTEGER}
+  </update>
+</mapper>

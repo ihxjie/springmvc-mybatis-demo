@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.dao.ProductTypeMapper">
+  <resultMap id="BaseResultMap" type="com.ex.model.ProductType">
+    <id column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+  </resultMap>
+  <insert id="addProductType" parameterType="com.ex.model.Border">
+    INSERT INTO product_type(type_name)
+    VALUES(#{typeName})
+  </insert>
+  <delete id="delProductType" parameterType="int">
+    DELETE FROM product_type
+    WHERE product_type.type_id = #{typeId}
+  </delete>
+  <select id="findAllType"  resultMap="BaseResultMap">
+    SELECT * FROM product_type
+  </select>
+  <select id="findTypeByNames" parameterType="String" resultMap="BaseResultMap">
+    select * from product_type
+    where type_name like concat('%',#{keyword},'%')
+       or type_id = #{keyword}
+  </select>
+</mapper>

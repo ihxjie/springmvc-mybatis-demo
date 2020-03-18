@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.dao.BorderMapper">
+  <resultMap id="BaseResultMap" type="com.ex.model.Border">
+    <id column="border_id" jdbcType="INTEGER" property="borderId" />
+    <result column="border_title" jdbcType="VARCHAR" property="borderTitle" />
+    <result column="border_content" jdbcType="VARCHAR" property="borderContent" />
+    <result column="border_publish_time" jdbcType="TIMESTAMP" property="borderPublishTime" />
+  </resultMap>
+  <insert id="addBorder" parameterType="com.ex.model.Border">
+    INSERT INTO border(border_title,border_content)
+    VALUES(#{borderTitle},#{borderContent})
+  </insert>
+  <delete id="delBorder" parameterType="int">
+    DELETE FROM border
+    WHERE border_id = #{border_id}
+  </delete>
+  <select id="getAllBorder"  resultMap="BaseResultMap">
+    SELECT * FROM border
+  </select>
+  <select id="findBorderByNames" parameterType="String" resultMap="BaseResultMap">
+    select * from border
+    where border_title like concat('%',#{keyword},'%')
+       or border_content like concat('%',#{keyword},'%')
+  </select>
+</mapper>

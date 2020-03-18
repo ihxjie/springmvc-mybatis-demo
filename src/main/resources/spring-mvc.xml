@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--扫描controller(后端控制器), 并且扫描其中的注解-->
+    <context:component-scan base-package="com.ex.controller"/>
+    <!-- 解除servlet对静态资源文件访问的限制 -->
+    <mvc:default-servlet-handler/>
+    <!--配置路径映射，访问静态文件-->
+    <mvc:resources mapping="/product/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/product/upload/**" location="/upload/"/>
+
+    <mvc:resources mapping="/user/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/product/toSingle/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/follow/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/order/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/cart/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/border/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/user/getout/**" location="/assets/"/>
+
+    <!--设置配置方案-->
+    <mvc:annotation-driven/>
+    <!--配置jsp 显示viewResolver(视图解析器)-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- 文件大小最大值 -1代表无限制 -->
+        <property name="maxUploadSize" value="-1" />
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960" />
+    </bean>
+    <!-- 设置静态资源不过滤 -->
+<!--    <mvc:resources location="/assets/" mapping="/assets/**"/>&lt;!&ndash; 样式 &ndash;&gt;-->
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/follow/getfollow/**"/>
+            <mvc:mapping path="/order/getorder/**"/>
+            <mvc:mapping path="/cart/getcart/**"/>
+            <mvc:mapping path="/user/toUserinform/**"/>
+            <bean class="com.ex.interceptor.UserInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/ProductBackstageSys"/>
+            <mvc:mapping path="/TypeBackstageSys"/>
+            <mvc:mapping path="/UserBackstageSys"/>
+            <mvc:mapping path="/OrderDetailBackstageSys"/>
+            <mvc:mapping path="/BorderBackstageSys"/>
+            <mvc:mapping path="/OrderBasisBackstageSys"/>
+            <bean class="com.ex.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>
