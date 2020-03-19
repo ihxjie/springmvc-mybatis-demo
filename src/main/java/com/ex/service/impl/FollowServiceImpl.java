@@ -1,8 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.FollowMapper;
-import com.ex.model.Follow;
-import com.ex.model.FollowList;
 import com.ex.service.FollowService;
 import org.springframework.stereotype.Service;
 

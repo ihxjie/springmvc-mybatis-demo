@@ -1,9 +1,5 @@
 package com.ex.test;
 
-import com.ex.dao.CartMapper;
-import com.ex.dao.UserMapper;
-import com.ex.model.Cart;
-import com.ex.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

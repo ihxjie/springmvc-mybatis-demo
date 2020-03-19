@@ -1,8 +1,6 @@
 package com.ex.test;
 
 import com.alibaba.fastjson.JSON;
-import com.ex.dao.BorderMapper;
-import com.ex.model.Border;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.junit.Test;

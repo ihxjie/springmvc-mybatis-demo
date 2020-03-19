@@ -1,8 +1,6 @@
 package com.ex.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ex.model.OrderBasis;
-import com.ex.model.ProductType;
 import com.ex.service.OrderBasisService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

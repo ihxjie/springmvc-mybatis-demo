@@ -1,8 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.CartMapper;
-import com.ex.model.Cart;
-import com.ex.model.CartList;
 import com.ex.service.CartService;
 import org.springframework.stereotype.Service;
 

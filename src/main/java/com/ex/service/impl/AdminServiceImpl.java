@@ -1,7 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.AdminMapper;
-import com.ex.model.Admin;
 import com.ex.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

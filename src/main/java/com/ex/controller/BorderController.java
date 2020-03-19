@@ -1,6 +1,5 @@
 package com.ex.controller;
 
-import com.ex.model.Border;
 import com.ex.service.BorderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,8 +1,5 @@
 package com.ex.controller;
 
-import com.ex.model.Cart;
-import com.ex.model.CartList;
-import com.ex.model.User;
 import com.ex.service.CartService;
 import org.springframework.stereotype.Controller;
 

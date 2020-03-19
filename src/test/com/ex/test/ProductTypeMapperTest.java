@@ -1,7 +1,5 @@
 package com.ex.test;
 
-import com.ex.dao.ProductTypeMapper;
-import com.ex.model.ProductType;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

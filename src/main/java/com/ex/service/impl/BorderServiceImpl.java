@@ -1,7 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.BorderMapper;
-import com.ex.model.Border;
 import com.ex.service.BorderService;
 import org.springframework.stereotype.Service;
 

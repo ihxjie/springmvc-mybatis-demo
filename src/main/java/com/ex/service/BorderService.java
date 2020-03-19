@@ -1,7 +1,5 @@
 package com.ex.service;
 
-import com.ex.model.Border;
-
 import java.util.List;
 
 public interface BorderService {

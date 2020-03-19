@@ -1,8 +1,5 @@
 package com.ex.service;
 
-import com.ex.model.Follow;
-import com.ex.model.FollowList;
-
 import java.util.List;
 
 public interface FollowService {

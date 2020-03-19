@@ -1,7 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.ProductTypeMapper;
-import com.ex.model.ProductType;
 import com.ex.service.ProductTypeService;
 import org.springframework.stereotype.Service;
 

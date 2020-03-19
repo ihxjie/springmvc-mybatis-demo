@@ -1,7 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.UserMapper;
-import com.ex.model.User;
 import com.ex.service.UserService;
 import org.springframework.stereotype.Service;
 

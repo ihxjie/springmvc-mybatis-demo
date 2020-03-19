@@ -1,9 +1,6 @@
 package com.ex.service.impl;
 
-import com.ex.dao.ProductMapper;
-import com.ex.model.Product;
 import com.ex.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

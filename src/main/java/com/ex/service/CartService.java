@@ -1,8 +1,5 @@
 package com.ex.service;
 
-import com.ex.model.Cart;
-import com.ex.model.CartList;
-
 import java.util.List;
 
 public interface CartService {

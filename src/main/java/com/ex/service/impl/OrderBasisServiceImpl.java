@@ -1,7 +1,5 @@
 package com.ex.service.impl;
 
-import com.ex.dao.OrderBasisMapper;
-import com.ex.model.OrderBasis;
 import com.ex.service.OrderBasisService;
 import org.springframework.stereotype.Service;
 

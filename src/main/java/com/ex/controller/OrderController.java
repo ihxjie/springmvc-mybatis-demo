@@ -1,9 +1,5 @@
 package com.ex.controller;
 
-import com.ex.model.CartList;
-import com.ex.model.FollowList;
-import com.ex.model.OrderBasis;
-import com.ex.model.OrderDetail;
 import com.ex.service.CartService;
 import com.ex.service.OrderBasisService;
 import com.ex.service.OrderDetailService;
@@ -15,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/order")

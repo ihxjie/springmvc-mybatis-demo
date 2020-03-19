@@ -1,7 +1,5 @@
 package com.ex.service;
 
-import com.ex.model.Product;
-
 import java.util.List;
 
 public interface ProductService {

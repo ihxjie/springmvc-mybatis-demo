@@ -56,15 +56,7 @@
             <mvc:mapping path="/user/toUserinform/**"/>
             <bean class="com.ex.interceptor.UserInterceptor"/>
         </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/ProductBackstageSys"/>
-            <mvc:mapping path="/TypeBackstageSys"/>
-            <mvc:mapping path="/UserBackstageSys"/>
-            <mvc:mapping path="/OrderDetailBackstageSys"/>
-            <mvc:mapping path="/BorderBackstageSys"/>
-            <mvc:mapping path="/OrderBasisBackstageSys"/>
-            <bean class="com.ex.interceptor.AdminInterceptor"/>
-        </mvc:interceptor>
+
     </mvc:interceptors>
 
 </beans>
