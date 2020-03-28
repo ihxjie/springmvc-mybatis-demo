@@ -80,41 +80,10 @@
              domainObjectName 是要生成的实体类名(可以不指定，默认按帕斯卡命名法将表名转换成类名)
              enableXXXByExample 默认为 true， 为 true 会生成一个对应Example帮助类，帮助你进行条件查询，不想要可以设为false
              -->
-        <table schema="" tableName="admin" domainObjectName="Admin"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-            <!--是否使用实际列名,默认为false-->
-            <!--<property name="useActualColumnNames" value="false" />-->
-        </table>
-        <table schema="" tableName="apply" domainObjectName="Apply"
+        <table schema="" tableName="Reason" domainObjectName="Reason"
                enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false" selectByExampleQueryId="false">
         </table>
-        <table schema="" tableName="company" domainObjectName="Company"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-        <table schema="" tableName="project" domainObjectName="Project"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-        <table schema="" tableName="result" domainObjectName="Result"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-        <table schema="" tableName="staff" domainObjectName="Staff"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-        <table schema="" tableName="student" domainObjectName="Student"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-        <table schema="" tableName="teacher" domainObjectName="Teacher"
-               enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
-               enableUpdateByExample="false" selectByExampleQueryId="false">
-        </table>
-
 
     </context>
 </generatorConfiguration>

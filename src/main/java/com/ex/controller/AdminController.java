@@ -1,61 +1,51 @@
 package com.ex.controller;
 
+import com.ex.model.Admin;
+import com.ex.model.Student;
 import com.ex.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpSession;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AdminController {
-    @Autowired
-    AdminService adminService;
-
-
-    @GetMapping("/login")
-    public String login(){
-        return "adminLogin";
-    }
-
-    @PostMapping("/validate")
-    public String validate(@ModelAttribute Admin admin, Model model, HttpSession session){
-        Admin a = adminService.findAdminByUsername(admin.getUsername());
-        if (a.getPassword().equals(admin.getPassword())){
-            session.setAttribute("username",a.getUsername());
-            return "adminProductBackstageSys";
+    @Resource
+    private AdminService adminService;
+    private Logger logger = Logger.getLogger(AdminController.class);
+    @RequestMapping(value="/sys/adminList/modify/{adminId}",method=RequestMethod.GET)
+    public String getStudentModify(@PathVariable String adminId,Model model,HttpServletRequest request){
+        logger.debug("getProviderById typeId===================== "+adminId);
+        Admin admin = new Admin();
+        try {
+            admin = adminService.getAdminById(adminId);
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        model.addAttribute("info","账号或密码错误");
-        return "adminLogin";
+        logger.debug("getProviderById studentId===================== "+admin .getAdminId());
+        model.addAttribute(admin );
+        return "updateadmin";
     }
-    @GetMapping("/logout")
-    public String logout(HttpSession session){
-        session.invalidate();
-        return "adminLogin";
-    }
-    @GetMapping("/ProductBackstageSys")
-    public String backstageSys(){
-        return "adminProductBackstageSys";
-    }
-    @GetMapping("/TypeBackstageSys")
-    public String typeBackSys(){
-        return "adminTypeBackstageSys";
-    }
-    @GetMapping("/UserBackstageSys")
-    public String userBackSys(){
-        return "adminUserBackstageSys";
-    }
-    @GetMapping("/OrderDetailBackstageSys")
-    public String orderDetailBackSys(){
-        return "adminOrderDetailBackstageSys";
-    }
-    @GetMapping("/BorderBackstageSys")
-    public String borderBackSys(){
-        return "adminBorderBackstageSys";
-    }
-    @GetMapping("/OrderBasisBackstageSys")
-    public String orderBasisBackSys(){
-        return "adminOrderBasisBackstageSys";
+    @RequestMapping(value="/sys/adminList/modifysave.html",method=RequestMethod.POST)
+    public String modifyAdminSave(Admin admin){
+        logger.debug("modifyAdminSave id===================== "+admin.getAdminId());
+        try {
+            if(adminService.updateByPrimaryKey(admin)){
+                return "redirect:/adminindex.html";
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "updateadmin";
     }
 }
