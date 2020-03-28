@@ -1,115 +1,106 @@
 package com.ex.controller;
 
-import com.ex.service.UserService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import net.sf.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.ex.dao.*;
+import com.ex.model.Company;
+import com.ex.model.Project;
+import com.ex.model.Student;
+import com.ex.model.Teacher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
-
 @Controller
-@RequestMapping("/user")
 public class UserController {
-
     @Resource
-    private UserService userService;
+    AdminMapper adminMapper;
+    @Resource
+    StudentMapper studentMapper;
+    @Resource
+    CompanyMapper companyMapper;
+    @Resource
+    TeacherMapper teacherMapper;
+    @Resource
+    ProjectMapper projectMapper;
 
-    @PostMapping("/checkEmailUnique")
-    public @ResponseBody
-    String testAjax(@RequestBody String email) {
-        JSONObject mapJson = JSONObject.fromObject(email);
-        String strEmail = mapJson.getString("userEmail");
-        System.out.println(strEmail);
-        System.out.println("tA执行了");
-        List<User> userList = null;
-        userList = userService.selectUserByEmail(strEmail);
-        System.out.println(userList);
-        System.out.println(userList.size());
-        if (userList.size() == 0) {
-            return "true";
-        } else {
-            return "false";
+    @PostMapping("/stu_validate")
+    public String stu_validate(String username, String password, Model model, HttpSession session){
+
+        Student s =  studentMapper.selectByPrimaryKey(username);
+
+        if(s != null && s.getStudentPwd().equals(password)){
+            session.setAttribute("username", username);
+            session.setAttribute("userEmail", s.getStudentEmail());
+            session.setAttribute("userTel", s.getStudentTel());
+            session.setAttribute("userSex", s.getStudentSex());
+            session.setAttribute("userMajor", s.getStudentMajor());
+            session.setAttribute("userClass", s.getStudentClass());
+            session.setAttribute("name", s.getStudentName());
+            return "student";
         }
-    }
-
-    @PostMapping("/postUser")
-    public String postUser(@RequestParam(name = "email") String email, @RequestParam(name = "password") String password) {
-        System.out.println(email + password);
-        User user = new User();
-        user.setUserEmail(email);
-        user.setUserPassword(password);
-        userService.insertUser(user);
+        model.addAttribute("info", "failed");
         return "login";
     }
 
-    @PostMapping("/updateUser")
-    public @ResponseBody
-    String updataUser(@RequestBody User user) {
-        System.out.println(user);
-        userService.updateByPrimaryKeySelective(user);
-        return "success";
-    }
+    @PostMapping("/teacher_validate")
+    public String teacher_validate(String username, String password, Model model, HttpSession session){
 
-    @PostMapping("/checkUser")
-    public @ResponseBody
-    String cherkUser(@RequestBody User user, HttpSession session) {
-        System.out.println("执行了");
-        System.out.println(user);
-        List<User> list = userService.selectUserByEmail(user.getUserEmail());
-        System.out.println(list.size());
-        if (list.size() != 0 && list.get(0).getUserPassword().equals(user.getUserPassword())) {
-            System.out.println("22");
-            session.setAttribute("uid", list.get(0).getUserId());
-            session.setAttribute("email", user.getUserEmail());
-            return "success";
-        } else {
-            System.out.println("11");
-            return "fail";
+        Teacher t =  teacherMapper.selectByPrimaryKey(username);
+
+        if(t != null && t.getTeacherPwd().equals(password)){
+
+            return "student";
         }
-    }
-
-    @RequestMapping("/toProduct")
-    public String toProduct() {
-        return "product";
-    }
-
-    @RequestMapping("/tologin")
-    public String tologin() {
+        model.addAttribute("info", "failed");
         return "login";
     }
 
-    @RequestMapping("/toUserinform")
-    public String toUserinform() {
-        return "userinform";
+    @PostMapping(value = "/company_validate", produces = "text/plain;charset=utf-8")
+    public String company_validate(String username, String password, Model model, HttpSession session){
+
+        Company c =  companyMapper.selectByPrimaryKey(username);
+        List<Project> passedList = projectMapper.selectPassedProject(username);
+        List<Project> rejectedList = projectMapper.selectRejectedProject(username);
+        List<Project> applyingList = projectMapper.selectApplyingProject(username);
+
+        if(c != null && c.getCompanyPwd().equals(password)){
+            session.setAttribute("username", username);
+            model.addAttribute("company", c);
+
+            model.addAttribute("applyingList", applyingList);
+            model.addAttribute("passedList", passedList);
+            model.addAttribute("rejectedList", rejectedList);
+
+            return "company";
+        }
+        model.addAttribute("info", "failed");
+        return "login";
     }
 
-    @RequestMapping("/getout")
-    public String getout(HttpSession session) {
-        session.removeAttribute("email");
-        return "redirect:/product/list/null";
+    @PostMapping("/private_information_modify")
+    public String private_information_modify(@ModelAttribute Student student, HttpSession session){
+        student.setStudentId(session.getAttribute("username").toString());
+        studentMapper.updateByPrimaryKeySelective(student);
+        return "redirect:student";
     }
-    @GetMapping("/delete/{userId}")
-    public String delete(@PathVariable Integer userId){
-        userService.deleteByUserId(userId);
-        return "redirect:/UserBackstageSys";
+    @PostMapping("/company_information_modify")
+    public String company_information_modify(@ModelAttribute Company company, HttpSession session){
+        company.setCompanyId(session.getAttribute("username").toString());
+        companyMapper.updateByPrimaryKeySelective(company);
+        return "redirect:/company";
     }
 
-    @GetMapping(value = "/getUser",produces = "text/plain;charset=utf-8")
+    @GetMapping(value = "/getStudentInfo" ,produces = "text/plain;charset=utf-8")
     @ResponseBody
-    public String getUser(@RequestParam(defaultValue = "1",value = "pageNum") int pageNum,
-                          @RequestParam(defaultValue = "10",value = "pageSize") int pageSize,
-                          @RequestParam(defaultValue = "", value = "keyword") String keyword){
-        PageHelper.startPage(pageNum,pageSize);
-        List<User> userList = userService.selectUserByEmail(keyword);
-        PageInfo pageInfo = new PageInfo(userList);
-        //System.out.println(JSONObject.toJSONString(pageInfo, WriteMapNullValue));
-        return com.alibaba.fastjson.JSONObject.toJSONString(pageInfo, WriteMapNullValue);
+    public String getStudentInfo(HttpSession session){
+        String username = session.getAttribute("username").toString();
+        Student student = studentMapper.selectByPrimaryKey(username);
+        return JSONObject.toJSONString(student, SerializerFeature.WriteMapNullValue);
     }
 
 }

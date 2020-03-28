@@ -17,16 +17,6 @@
     <!-- 解除servlet对静态资源文件访问的限制 -->
     <mvc:default-servlet-handler/>
     <!--配置路径映射，访问静态文件-->
-    <mvc:resources mapping="/product/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/product/upload/**" location="/upload/"/>
-
-    <mvc:resources mapping="/user/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/product/toSingle/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/follow/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/order/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/cart/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/border/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/user/getout/**" location="/assets/"/>
 
     <!--设置配置方案-->
     <mvc:annotation-driven/>
@@ -46,17 +36,11 @@
         <property name="maxInMemorySize" value="40960" />
     </bean>
     <!-- 设置静态资源不过滤 -->
+    <mvc:resources mapping="/payfor/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/pay/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/view/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/rejected/assets/**" location="/assets/"/>
 <!--    <mvc:resources location="/assets/" mapping="/assets/**"/>&lt;!&ndash; 样式 &ndash;&gt;-->
     <!--配置拦截器-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/follow/getfollow/**"/>
-            <mvc:mapping path="/order/getorder/**"/>
-            <mvc:mapping path="/cart/getcart/**"/>
-            <mvc:mapping path="/user/toUserinform/**"/>
-            <bean class="com.ex.interceptor.UserInterceptor"/>
-        </mvc:interceptor>
-
-    </mvc:interceptors>
 
 </beans>
