@@ -24,7 +24,7 @@ public class CompanyController {
     CompanyMapper companyMapper;
 
     @GetMapping("excel/{projectId}")
-    public void excel(@PathVariable Integer projectId, HttpServletResponse response)throws IOException {
+    public void excel_training_table(@PathVariable Integer projectId, HttpServletResponse response)throws IOException {
         response.setCharacterEncoding("UTF-8");
         List<StudentTable> list = companyMapper.selectStudentTable(projectId);
         System.out.println(list);
