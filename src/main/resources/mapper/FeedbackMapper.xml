@@ -21,7 +21,7 @@
     option_5, option_6, option_7, option_8, for_us
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from feedback
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
@@ -191,4 +191,20 @@
     and project_id = #{projectId}
     and teacher_id = #{teacherId}
   </select>
+
+  <!--管理员收集反馈-->
+  <select id = "getFeedbackList" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select * from Feedback
+  	</select>
+  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Feedback
+			where feedback.teacher_id=#{teacher_id}
+	</select>
+  <select id="lookTeacherId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from feedback
+    where teacher_id = #{teacherId,jdbcType=INTEGER}
+  </select>
+
 </mapper>

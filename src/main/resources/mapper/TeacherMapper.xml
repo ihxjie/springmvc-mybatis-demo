@@ -12,11 +12,11 @@
     <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
   </resultMap>
   <sql id="Base_Column_List">
-    teacher_id, teacher_pwd, teacher_name, teacher_sex, teacher_tel, introduction, teacher_email, 
+    teacher_id, teacher_pwd, teacher_name, teacher_sex, teacher_tel, introduction, teacher_email,
     is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from teacher
     where teacher_id = #{teacherId,jdbcType=VARCHAR}
@@ -26,12 +26,12 @@
     where teacher_id = #{teacherId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Teacher">
-    insert into teacher (teacher_id, teacher_pwd, teacher_name, 
-      teacher_sex, teacher_tel, introduction, 
-      teacher_email, is_delete)
-    values (#{teacherId,jdbcType=VARCHAR}, #{teacherPwd,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR}, 
-      #{teacherSex,jdbcType=VARCHAR}, #{teacherTel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
-      #{teacherEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
+    insert into teacher (teacher_id, teacher_pwd, teacher_name,
+                         teacher_sex, teacher_tel, introduction,
+                         teacher_email, is_delete)
+    values (#{teacherId,jdbcType=VARCHAR}, #{teacherPwd,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
+            #{teacherSex,jdbcType=VARCHAR}, #{teacherTel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR},
+            #{teacherEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Teacher">
     insert into teacher
@@ -118,12 +118,33 @@
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Teacher">
     update teacher
     set teacher_pwd = #{teacherPwd,jdbcType=VARCHAR},
-      teacher_name = #{teacherName,jdbcType=VARCHAR},
-      teacher_sex = #{teacherSex,jdbcType=VARCHAR},
-      teacher_tel = #{teacherTel,jdbcType=VARCHAR},
-      introduction = #{introduction,jdbcType=VARCHAR},
-      teacher_email = #{teacherEmail,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=INTEGER}
+        teacher_name = #{teacherName,jdbcType=VARCHAR},
+        teacher_sex = #{teacherSex,jdbcType=VARCHAR},
+        teacher_tel = #{teacherTel,jdbcType=VARCHAR},
+        introduction = #{introduction,jdbcType=VARCHAR},
+        teacher_email = #{teacherEmail,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=INTEGER}
     where teacher_id = #{teacherId,jdbcType=VARCHAR}
   </update>
+  <select id = "getTeacherList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from Teacher
+  </select>
+  <select id="getTeacherById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Teacher
+    where teacher.teacher_id=#{teacher_id}
+  </select>
+  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from teacher
+  </select>
+  <delete id = "delTeacherById" parameterType="String">
+    delete from teacher where teacher_id = #{teacherId};
+  </delete>
+  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Teacher
+    where teacher.teacher_id=#{teacher_id}
+  </select>
+  <delete id="deleteTeacher" parameterType="java.lang.String">
+    delete from teacher
+    where teacher_id = #{teacherId,jdbcType=VARCHAR}
+  </delete>
 </mapper>

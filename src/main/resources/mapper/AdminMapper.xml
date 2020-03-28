@@ -10,19 +10,20 @@
     admin_id, admin_pwd, admin_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from admin
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from admin
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Admin">
-    insert into admin (admin_id, admin_pwd, admin_name
+    insert into admin (admin_id, admin_pwd
       )
-    values (#{adminId,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR}, #{adminName,jdbcType=VARCHAR}
+    values (#{adminId,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Admin">
@@ -34,9 +35,6 @@
       <if test="adminPwd != null">
         admin_pwd,
       </if>
-      <if test="adminName != null">
-        admin_name,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="adminId != null">
@@ -45,9 +43,7 @@
       <if test="adminPwd != null">
         #{adminPwd,jdbcType=VARCHAR},
       </if>
-      <if test="adminName != null">
-        #{adminName,jdbcType=VARCHAR},
-      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Admin">
@@ -56,16 +52,22 @@
       <if test="adminPwd != null">
         admin_pwd = #{adminPwd,jdbcType=VARCHAR},
       </if>
-      <if test="adminName != null">
-        admin_name = #{adminName,jdbcType=VARCHAR},
-      </if>
+
     </set>
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Admin">
     update admin
-    set admin_pwd = #{adminPwd,jdbcType=VARCHAR},
-      admin_name = #{adminName,jdbcType=VARCHAR}
+    set admin_pwd = #{adminPwd,jdbcType=VARCHAR}
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </update>
+<!--管理员登录-->
+  <select id="getLoginAdmin" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    select * from admin where admin_id=#{adminId,jdbcType=VARCHAR}
+  </select>
+  <select id="getAdminById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Admin
+			where admin.admin_id=#{admin_id}
+  </select>
+
 </mapper>

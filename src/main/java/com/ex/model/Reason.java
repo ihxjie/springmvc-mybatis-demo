@@ -1,16 +1,16 @@
 package com.ex.model;
 
 public class Reason {
-    private Integer projectid;
+    private Integer projectId;
 
     private String refuse;
 
-    public Integer getProjectid() {
-        return projectid;
+    public Integer getProjectId() {
+        return projectId;
     }
 
-    public void setProjectid(Integer projectid) {
-        this.projectid = projectid;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public String getRefuse() {

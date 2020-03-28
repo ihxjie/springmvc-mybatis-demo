@@ -22,6 +22,37 @@
     from student
     where student_id = #{studentId,jdbcType=VARCHAR}
   </select>
+
+  <select id = "getStudentList" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select * from Student
+  	</select>
+  <select id="getStudentById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Student
+			where student.student_id=#{student_id}
+	</select>
+  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from student
+	</select>
+  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Student
+			where student.student_id=#{student_id}
+	</select>
+  <delete id = "delStudentById" parameterType="String">
+  		delete from student where student_id = #{studentId};
+  	</delete>
+  <delete id = "deleteStudent" parameterType="String">
+  		delete from student where student_id = #{studentId};
+  	</delete>
+  <select id="selectStudentExistd" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Student
+			where student.student_id=#{student_id}
+	</select>
+  <select id="selectEmailExist" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Student
+			where student.student_email=#{student_email}
+	</select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from student
     where student_id = #{studentId,jdbcType=VARCHAR}

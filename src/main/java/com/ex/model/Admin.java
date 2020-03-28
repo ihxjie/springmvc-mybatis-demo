@@ -5,7 +5,7 @@ public class Admin {
 
     private String adminPwd;
 
-    private String adminName;
+
 
     public String getAdminId() {
         return adminId;
@@ -23,11 +23,4 @@ public class Admin {
         this.adminPwd = adminPwd == null ? null : adminPwd.trim();
     }
 
-    public String getAdminName() {
-        return adminName;
-    }
-
-    public void setAdminName(String adminName) {
-        this.adminName = adminName == null ? null : adminName.trim();
-    }
 }

@@ -21,7 +21,7 @@
     apply_id, project_id, person_id, person_name, status, is_student
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from apply
     where apply_id = #{applyId,jdbcType=INTEGER}
@@ -105,12 +105,41 @@
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Apply">
     update apply
     set project_id = #{projectId,jdbcType=INTEGER},
-      person_id = #{personId,jdbcType=VARCHAR},
-      person_name = #{personName,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      is_student = #{isStudent,jdbcType=INTEGER}
+        person_id = #{personId,jdbcType=VARCHAR},
+        person_name = #{personName,jdbcType=VARCHAR},
+        status = #{status,jdbcType=INTEGER},
+        is_student = #{isStudent,jdbcType=INTEGER}
     where apply_id = #{applyId,jdbcType=INTEGER}
   </update>
+  <!--申请表用的-->
+  <update id="updateApply" parameterType="com.ex.model.Apply">
+    update apply
+    set project_id = #{projectId,jdbcType=INTEGER},
+        person_id = #{personId,jdbcType=VARCHAR},
+        person_name = #{personName,jdbcType=VARCHAR},
+        is_student = #{isStudent,jdbcType=INTEGER}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectApplyId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <select id = "getApplyList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from Apply
+  </select>
+  <select id="queryExcelInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from apply
+  </select>
+  <delete id="delApplyById" parameterType="Integer">
+    delete from apply where apply_id = #{applyId};
+  </delete>
+  <select id="selectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from apply
+    where apply.apply_id=#{apply_id}
+  </select>
 
   <select id="selectEnrollInfo" resultMap="BaseResultMap">
     select * from apply where person_id = #{studentId} and project_id = #{projectId}
@@ -119,7 +148,7 @@
     SELECT apply_id, a.project_id, person_id, person_name, a.`status`, project_title
     from apply a, project p
     where (a.project_id = p.project_id)
-    and person_id = #{studentId}
+      and person_id = #{studentId}
   </select>
   <select id="getTeacherApply" parameterType="String" resultMap="BaseResultMap">
     select * from apply where project_id = ${projectId} and is_student = 0

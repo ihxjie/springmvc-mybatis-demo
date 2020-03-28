@@ -22,7 +22,7 @@
     is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from company
     where company_id = #{companyId,jdbcType=VARCHAR}
@@ -32,11 +32,11 @@
     where company_id = #{companyId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Company">
-    insert into company (company_id, company_pwd, company_name, 
-      company_address, contact_name, contact_tel, 
+    insert into company (company_id, company_pwd, company_name,
+      company_address, contact_name, contact_tel,
       is_delete)
-    values (#{companyId,jdbcType=VARCHAR}, #{companyPwd,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, 
-      #{companyAddress,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR}, 
+    values (#{companyId,jdbcType=VARCHAR}, #{companyPwd,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR},
+      #{companyAddress,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, #{contactTel,jdbcType=VARCHAR},
       #{isDelete,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Company">
@@ -112,6 +112,32 @@
     </set>
     where company_id = #{companyId,jdbcType=VARCHAR}
   </update>
+
+  <!--管理员管理公司部分-->
+  <select id="selectCompanyId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from company
+    where company_id = #{companyId,jdbcType=VARCHAR}
+  </select>
+  <select id = "getCompanyList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  		select * from Company
+  	</select>
+  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from company
+	</select>
+  <delete id = "delCompanyById" parameterType="String">
+  		delete from company where company_id = #{companyId};
+  	</delete>
+  <delete id="deleteCompanyId" parameterType="java.lang.String">
+    delete from company
+    where company_id = #{companyId,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Company
+			where company.company_id=#{company_id}
+	</select>
+
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Company">
     update company
     set company_pwd = #{companyPwd,jdbcType=VARCHAR},

@@ -2,39 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ex.dao.ReasonMapper">
   <resultMap id="BaseResultMap" type="com.ex.model.Reason">
-    <id column="projectId" jdbcType="INTEGER" property="projectid" />
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
     <result column="refuse" jdbcType="VARCHAR" property="refuse" />
   </resultMap>
   <sql id="Base_Column_List">
-    projectId, refuse
+    project_id, refuse
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from reason
-    where projectId = #{projectid,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from reason
-    where projectId = #{projectid,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Reason">
-    insert into reason (projectId, refuse)
-    values (#{projectid,jdbcType=INTEGER}, #{refuse,jdbcType=VARCHAR})
+    insert into reason (project_id, refuse)
+    values (#{projectId,jdbcType=INTEGER}, #{refuse,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Reason">
     insert into reason
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="projectid != null">
-        projectId,
+      <if test="projectId != null">
+        project_id,
       </if>
       <if test="refuse != null">
         refuse,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="projectid != null">
-        #{projectid,jdbcType=INTEGER},
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
       </if>
       <if test="refuse != null">
         #{refuse,jdbcType=VARCHAR},
@@ -48,11 +48,11 @@
         refuse = #{refuse,jdbcType=VARCHAR},
       </if>
     </set>
-    where projectId = #{projectid,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Reason">
     update reason
     set refuse = #{refuse,jdbcType=VARCHAR}
-    where projectId = #{projectid,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
   </update>
 </mapper>

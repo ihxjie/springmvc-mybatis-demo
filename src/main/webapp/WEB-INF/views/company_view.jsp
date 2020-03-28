@@ -106,7 +106,7 @@
                                         <p class="text-primary m-0 font-weight-bold">实训基本信息</p>
                                     </div>
                                     <div class="card-body">
-                                        <form method="post">
+                                        <form method="post" action="${pageContext.request.contextPath}/resubmit">
                                             <input type="hidden" name="projectId" value="${project.projectId}">
                                             <div class="form-row">
                                                 <div class="col">
@@ -117,7 +117,7 @@
                                             <div class="form-row">
                                                 <div class="col">
                                                     <div class="form-group"><label for="projectAddress"><strong>实训地址</strong><br></label>
-                                                        <input id="projectAddress" class="form-control" type="text" placeholder="project.address" name="projectTitle" value="${project.projectAddress}"></div>
+                                                        <input id="projectAddress" class="form-control" type="text" placeholder="project.address" name="projectAddress" value="${project.projectAddress}"></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-group"><label for="projectPrice"><strong>实训价格</strong><br></label>

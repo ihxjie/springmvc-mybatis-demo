@@ -19,4 +19,14 @@ public interface ResultMapper {
     int updateByPrimaryKey(Result record);
 
     List<Grade> selectStudentResult(String studentId);
+
+    List<Result> getResultList();//
+
+    Result getResultById(String studentId);//
+
+    List<Result> queryExcelInfo();//导表
+
+    int delResultById(String resultId);//批量删除
+
+    List<Result> selectId(String studentId);//查询
 }

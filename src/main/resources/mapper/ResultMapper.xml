@@ -1,105 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ex.dao.ResultMapper">
-  <resultMap id="BaseResultMap" type="com.ex.model.Result">
-    <id column="result_id" jdbcType="INTEGER" property="resultId" />
-    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
-    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
-    <result column="result" jdbcType="INTEGER" property="result" />
-    <result column="project_id" jdbcType="INTEGER" property="projectId" />
-  </resultMap>
-  <resultMap id="GradeResultMap" type="com.ex.model.Grade">
-    <id column="result_id" jdbcType="INTEGER" property="resultId" />
-    <result column="student_id" jdbcType="VARCHAR" property="studentId" />
-    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
-    <result column="result" jdbcType="INTEGER" property="result" />
-    <result column="project_title" jdbcType="VARCHAR" property="projectTitle" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    result_id, student_id, student_name, result, project_id
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from result
-    where result_id = #{resultId,jdbcType=INTEGER}
-  </select>
-  <select id="selectStudentResult" parameterType="String" resultMap="GradeResultMap">
-    SELECT result_id, student_id, student_name, result, p.project_title
-    FROM result r, project p
-    WHERE r.project_id = p.project_id and student_id = #{studentId}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from result
-    where result_id = #{resultId,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.ex.model.Result">
-    insert into result (result_id, student_id, student_name, 
-      result, project_id)
-    values (#{resultId,jdbcType=INTEGER}, #{studentId,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
-      #{result,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ex.model.Result">
-    insert into result
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="resultId != null">
-        result_id,
-      </if>
-      <if test="studentId != null">
-        student_id,
-      </if>
-      <if test="studentName != null">
-        student_name,
-      </if>
-      <if test="result != null">
-        result,
-      </if>
-      <if test="projectId != null">
-        project_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="resultId != null">
-        #{resultId,jdbcType=INTEGER},
-      </if>
-      <if test="studentId != null">
-        #{studentId,jdbcType=VARCHAR},
-      </if>
-      <if test="studentName != null">
-        #{studentName,jdbcType=VARCHAR},
-      </if>
-      <if test="result != null">
-        #{result,jdbcType=INTEGER},
-      </if>
-      <if test="projectId != null">
-        #{projectId,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Result">
-    update result
-    <set>
-      <if test="studentId != null">
-        student_id = #{studentId,jdbcType=VARCHAR},
-      </if>
-      <if test="studentName != null">
-        student_name = #{studentName,jdbcType=VARCHAR},
-      </if>
-      <if test="result != null">
-        result = #{result,jdbcType=INTEGER},
-      </if>
-      <if test="projectId != null">
-        project_id = #{projectId,jdbcType=INTEGER},
-      </if>
-    </set>
-    where result_id = #{resultId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ex.model.Result">
-    update result
-    set student_id = #{studentId,jdbcType=VARCHAR},
-      student_name = #{studentName,jdbcType=VARCHAR},
-      result = #{result,jdbcType=INTEGER},
-      project_id = #{projectId,jdbcType=INTEGER}
-    where result_id = #{resultId,jdbcType=INTEGER}
-  </update>
+    <resultMap id="BaseResultMap" type="com.ex.model.Result">
+        <id column="result_id" jdbcType="INTEGER" property="resultId" />
+        <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+        <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+        <result column="result" jdbcType="INTEGER" property="result" />
+        <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    </resultMap>
+    <resultMap id="GradeResultMap" type="com.ex.model.Grade">
+        <id column="result_id" jdbcType="INTEGER" property="resultId" />
+        <result column="student_id" jdbcType="VARCHAR" property="studentId" />
+        <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+        <result column="result" jdbcType="INTEGER" property="result" />
+        <result column="project_title" jdbcType="VARCHAR" property="projectTitle" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        result_id, student_id, student_name, result, project_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from result
+        where result_id = #{resultId,jdbcType=INTEGER}
+    </select>
+    <select id="selectStudentResult" parameterType="String" resultMap="GradeResultMap">
+        SELECT result_id, student_id, student_name, result, p.project_title
+        FROM result r, project p
+        WHERE r.project_id = p.project_id and student_id = #{studentId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from result
+        where result_id = #{resultId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.ex.model.Result">
+        insert into result (result_id, student_id, student_name,
+                            result, project_id)
+        values (#{resultId,jdbcType=INTEGER}, #{studentId,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR},
+                #{result,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ex.model.Result">
+        insert into result
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resultId != null">
+                result_id,
+            </if>
+            <if test="studentId != null">
+                student_id,
+            </if>
+            <if test="studentName != null">
+                student_name,
+            </if>
+            <if test="result != null">
+                result,
+            </if>
+            <if test="projectId != null">
+                project_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resultId != null">
+                #{resultId,jdbcType=INTEGER},
+            </if>
+            <if test="studentId != null">
+                #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="studentName != null">
+                #{studentName,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                #{projectId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Result">
+        update result
+        <set>
+            <if test="studentId != null">
+                student_id = #{studentId,jdbcType=VARCHAR},
+            </if>
+            <if test="studentName != null">
+                student_name = #{studentName,jdbcType=VARCHAR},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=INTEGER},
+            </if>
+            <if test="projectId != null">
+                project_id = #{projectId,jdbcType=INTEGER},
+            </if>
+        </set>
+        where result_id = #{resultId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ex.model.Result">
+        update result
+        set student_id = #{studentId,jdbcType=VARCHAR},
+            student_name = #{studentName,jdbcType=VARCHAR},
+            result = #{result,jdbcType=INTEGER},
+            project_id = #{projectId,jdbcType=INTEGER}
+        where result_id = #{resultId,jdbcType=INTEGER}
+    </update>
+    <select id = "getResultList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from result
+    </select>
+    <select id="getResultById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from result
+        where result.student_id=#{student_id}
+    </select>
+    <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from result
+    </select>
+    <delete id = "delResultById" parameterType="String">
+        delete from result where result_id = #{resultId};
+    </delete>
+    <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from result
+        where result.student_id=#{studentId}
+    </select>
+
 </mapper>
