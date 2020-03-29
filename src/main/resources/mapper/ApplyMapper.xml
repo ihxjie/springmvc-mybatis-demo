@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.dao.ApplyMapper">
+  <resultMap id="BaseResultMap" type="com.ex.model.Apply">
+    <id column="apply_id" jdbcType="INTEGER" property="applyId" />
+    <result column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="is_student" jdbcType="INTEGER" property="isStudent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    apply_id, project_id, person_id, person_name, status, is_student
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from apply
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ex.model.Apply">
+    insert into apply (apply_id, project_id, person_id, 
+      person_name, status, is_student
+      )
+    values (#{applyId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{personId,jdbcType=VARCHAR}, 
+      #{personName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isStudent,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ex.model.Apply">
+    insert into apply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applyId != null">
+        apply_id,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="isStudent != null">
+        is_student,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applyId != null">
+        #{applyId,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isStudent != null">
+        #{isStudent,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Apply">
+    update apply
+    <set>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="isStudent != null">
+        is_student = #{isStudent,jdbcType=INTEGER},
+      </if>
+    </set>
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ex.model.Apply">
+    update apply
+    set project_id = #{projectId,jdbcType=INTEGER},
+      person_id = #{personId,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      is_student = #{isStudent,jdbcType=INTEGER}
+    where apply_id = #{applyId,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+  <select id="getApplyListStudent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	    select a.*
+	     from apply a
+         where a.status=1 and a.is_student=1
+	</select>
+
+  <select id="getApplyList" resultType="com.ex.model.Apply">
+	     select a.*,p.project_title
+	     from apply a,project p
+	     where a.project_id=p.project_id and a.is_student=0 and a.person_name like CONCAT ('%',#{personName},'%')
+	     order by apply.apply_id DESC
+	</select>
+
+  <select id="getApplyByProjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+	     select a.*,p.project_title
+	     from apply a,project p
+	     where a.project_id=p.project_id and a.is_student=1 and  a.project_id=#{project_id}
+	     order by a.apply_id ASC
+	</select>
+
+  <select id="getApplyById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.*,p.project_title
+    from apply a,project p
+    where a.project_id=p.project_id and apply_id = #{applyId,jdbcType=INTEGER}
+    order by a.apply_id
+  </select>
+
+
+  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from apply
+		where is_student=1 and status=1
+	</select>
+
+</mapper>

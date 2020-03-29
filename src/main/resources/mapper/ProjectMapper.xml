@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ex.dao.ProjectMapper">
+  <resultMap id="BaseResultMap" type="com.ex.model.Project">
+    <id column="project_id" jdbcType="INTEGER" property="projectId" />
+    <result column="is_company" jdbcType="INTEGER" property="isCompany" />
+    <result column="work_id" jdbcType="VARCHAR" property="workId" />
+    <result column="project_title" jdbcType="VARCHAR" property="projectTitle" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="project_content" jdbcType="VARCHAR" property="projectContent" />
+    <result column="project_address" jdbcType="VARCHAR" property="projectAddress" />
+    <result column="project_price" jdbcType="VARCHAR" property="projectPrice" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    project_id, is_company, work_id,project_title, period, project_content, project_address,
+    project_price,status
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from project
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from project
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.ex.model.Project">
+    insert into project (project_id, is_company, work_id, project_title,period, project_content, project_address,project_price)
+    values (#{projectId,jdbcType=INTEGER}, #{isCompany,jdbcType=INTEGER}, #{workId,jdbcType=VARCHAR}, #{projectTitle,jdbcType=VARCHAR},
+      #{period,jdbcType=VARCHAR}, #{projectContent,jdbcType=VARCHAR}, #{projectAddress,jdbcType=VARCHAR}, #{projectPrice,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.ex.model.Project">
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        project_id,
+      </if>
+      <if test="isCompany != null">
+        is_company,
+      </if>
+      <if test="workId != null">
+        work_id,
+      </if>
+      <if test="projectTitle != null">
+        project_title,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="projectContent != null">
+        project_content,
+      </if>
+      <if test="projectAddress != null">
+        project_address,
+      </if>
+      <if test="projectPrice != null">
+        project_price,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="projectId != null">
+        #{projectId,jdbcType=INTEGER},
+      </if>
+      <if test="isCompany != null">
+        #{isCompany,jdbcType=INTEGER},
+      </if>
+      <if test="workId != null">
+        #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectTitle != null">
+        #{projectTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null">
+        #{projectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAddress != null">
+        #{projectAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPrice != null">
+        #{projectPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Project">
+    update project
+    <set>
+      <if test="isCompany != null">
+        is_company = #{isCompany,jdbcType=INTEGER},
+      </if>
+      <if test="workId != null">
+        work_id = #{workId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectTitle != null">
+        project_title,
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="projectContent != null">
+        project_content = #{projectContent,jdbcType=VARCHAR},
+      </if>
+      <if test="projectAddress != null">
+        project_address = #{projectAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="projectPrice != null">
+        project_price = #{projectPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.ex.model.Project">
+    update project
+    set is_company = #{isCompany,jdbcType=INTEGER},
+      work_id = #{workId,jdbcType=VARCHAR},
+      project_title = #{projectTitle,jdbcType=VARCHAR},
+      period = #{period,jdbcType=VARCHAR},
+      project_content = #{projectContent,jdbcType=VARCHAR},
+      project_address = #{projectAddress,jdbcType=VARCHAR},
+      project_price = #{projectPrice,jdbcType=VARCHAR}
+      status = #{status,jdbcType=INTEGER}
+    where project_id = #{projectId,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getProjectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Project
+			where project.project_id=#{project_id}
+	</select>
+
+
+  <select id="getProjectByWorkId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  select p.*
+  from Project p
+  where p.is_company=0
+  group by p.work_id
+  order by project_id
+  </select>
+
+
+  <select id="getProject" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from Project
+			where project.project_title=#{project_title}
+	</select>
+
+  <select id = "getProjectList" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select * from Project
+  		where project.status=1 and project.is_company=1
+  	</select>
+
+  <select id = "getProjectLiist" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select *
+  		from Project
+  		where project.status=1 and project.is_company=0
+  	</select>
+
+  <select id="getProjectCount" resultType="java.lang.Integer">
+	select count(0) from project
+	</select>
+</mapper>

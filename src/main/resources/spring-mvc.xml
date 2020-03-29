@@ -48,15 +48,6 @@
     <!-- 设置静态资源不过滤 -->
 <!--    <mvc:resources location="/assets/" mapping="/assets/**"/>&lt;!&ndash; 样式 &ndash;&gt;-->
     <!--配置拦截器-->
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/follow/getfollow/**"/>
-            <mvc:mapping path="/order/getorder/**"/>
-            <mvc:mapping path="/cart/getcart/**"/>
-            <mvc:mapping path="/user/toUserinform/**"/>
-            <bean class="com.ex.interceptor.UserInterceptor"/>
-        </mvc:interceptor>
 
-    </mvc:interceptors>
 
 </beans>
