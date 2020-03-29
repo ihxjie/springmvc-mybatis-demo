@@ -31,7 +31,7 @@ public interface ProjectMapper {
 
     Project selectProjectId(Integer projectId);//查询
 
-    List<Project> getProjectList();//获取全部
+    List<Project> getProjectLists();//获取全部
 
     List<Project> queryExcelInfo();//导表
 
@@ -40,4 +40,18 @@ public interface ProjectMapper {
     int delProjectById(Integer projectId);//批量删除
 
     List<Project> selectId(Integer projectId);//查询
+
+
+    Project getProjectById(String projectId);
+
+    Project getProject(String projectTitle);
+
+    List<Project> getProjectList(String projectTitle);
+
+    List<Project> getProjectLiist(String projectTitle);
+
+    int getProjectCount();
+
+    List<Project> getProjectByWorkId(String workId);
+
 }

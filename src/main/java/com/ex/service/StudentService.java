@@ -27,6 +27,12 @@ public interface StudentService {
     Student selectEmailExist(String studentEmail);//验证学生邮箱
 
 
+    boolean deleteByPrimaryKey(String studentId);//根据id删除学生信息
+
+    Student updateByPrimaryKeySelective(Integer studentId);
+
+    Student selectByPrimaryKey(String studentId);
+
 
     //Student getStudentById(int studentId);
 }

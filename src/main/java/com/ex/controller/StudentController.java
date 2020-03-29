@@ -61,7 +61,7 @@ public class StudentController {
     @RequestMapping(value="/sys/studentList/looklist.html",method=RequestMethod.POST)
     public String viewstudent(Model model,
                               @RequestParam(value="studentId",required=false) String studentId,
-    @RequestParam(value="page",required=false) String page) {
+                              @RequestParam(value="page",required=false) String page) {
         PageHelper.startPage(Integer.parseInt(page), 8);
         //紧跟的第一个select方法被分页
         List<Student> studentList = studentService.selectId(studentId);
@@ -214,20 +214,20 @@ public class StudentController {
     public Object GoodsIsExit(@RequestParam String studentId){
         logger.debug("cnameIsExit studentId===================== "+studentId);
         HashMap<String, String> resultMap = new HashMap<String, String>();
-           Student student= null;
-            try {
+        Student student= null;
+        try {
 
-                student =  studentService.selectStudentExist(studentId);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            if(null != student)
-                resultMap.put("studentId", "exist");
-            else
-                resultMap.put("studentId", "noexist");
-        return JSONArray.toJSONString(resultMap);
+            student =  studentService.selectStudentExist(studentId);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        if(null != student)
+            resultMap.put("studentId", "exist");
+        else
+            resultMap.put("studentId", "noexist");
+        return JSONArray.toJSONString(resultMap);
+    }
     @RequestMapping(value="/sys/studentList/csexistEmail.json")
     @ResponseBody
     public Object Exit(@RequestParam String studentEmail){

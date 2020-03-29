@@ -11,8 +11,8 @@ import com.ex.model.Reason;
 import com.ex.model.StudentTable;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.aspectj.asm.IModelFilter;
-import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.ex.model.Project;
 import com.ex.model.Student;
@@ -90,8 +90,8 @@ public class ProjectController {
         return JSONObject.toJSONString(pageInfo, WriteMapNullValue);
     }
 
-    @GetMapping(value = "view/{projectId}", produces = "text/plain;charset=utf-8")
-    public String view(@PathVariable Integer projectId, Model model, HttpSession session){
+    @GetMapping(value = "company_view/{projectId}", produces = "text/plain;charset=utf-8")
+    public String company_view(@PathVariable Integer projectId, Model model, HttpSession session){
 
         String username = session.getAttribute("username").toString();
         List<Project> passedList = projectMapper.selectPassedProject(username);
@@ -132,19 +132,19 @@ public class ProjectController {
         project.setStatus(0);
         projectMapper.insertSelective(project);
         Integer i = projectMapper.getID();
-        return "redirect:/view/" + i;
+        return "redirect:/company_view/" + i;
     }
     @PostMapping(value = "resubmit", produces = "text/plain;charset=utf-8")
     public String resubmit(@ModelAttribute Project project){
         project.setStatus(0);
         projectMapper.updateByPrimaryKeySelective(project);
         reasonMapper.deleteByPrimaryKey(project.getProjectId());
-        return "redirect:/view/" + project.getProjectId();
+        return "redirect:/company_view/" + project.getProjectId();
     }
     @PostMapping(value = "update_project", produces = "text/plain;charset=utf-8")
     public String update_project(@ModelAttribute Project project) {
         projectMapper.updateByPrimaryKeySelective(project);
-        return "redirect:/view/" + project.getProjectId();
+        return "redirect:/company_view/" + project.getProjectId();
     }
     @RequestMapping(value = "/projectList", method = RequestMethod.GET)
     public String getProjectList(@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
@@ -220,19 +220,7 @@ public class ProjectController {
         model.addAttribute(project);
         return "updateproject";
     }
-    @RequestMapping(value="/sys/projectList/modifysave.html",method=RequestMethod.POST)
-    public String modifyProjectSave(Project project){
-        logger.debug("modifyProjectSave id===================== "+project.getProjectId());
-        try {
-            if(projectService.updateByPrimaryKey(project)){
-                return "redirect:/projectList.html";
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return "updateproject";
-    }
+
     @RequestMapping("/sys/projectController/excel")
     public void excel(HttpServletResponse response )throws IOException {
         response.setCharacterEncoding("UTF-8");
@@ -284,18 +272,18 @@ public class ProjectController {
         Project project = new Project();
         HashMap<String, String> resultMap = new HashMap<String, String>();
 
-            try {
-                if (projectService.updatestatus(projectId, 0) ) {
-                    resultMap.put("result", "true");
-                } else
-                    resultMap.put("result", "false");
-            } catch (NumberFormatException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            if (projectService.updatestatus(projectId, 0) ) {
+                resultMap.put("result", "true");
+            } else
+                resultMap.put("result", "false");
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return JSONArray.toJSONString(resultMap);
     }
 
@@ -303,18 +291,18 @@ public class ProjectController {
     @ResponseBody
     public Object deluser(@RequestParam Integer projectId){
         HashMap<String, String> resultMap = new HashMap<String, String>();
-            try {
-                if(projectService.updatestatus(projectId,1))
-                    resultMap.put("result", "true");
-                else
-                    resultMap.put("result", "false");
-            } catch (NumberFormatException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            if(projectService.updatestatus(projectId,1))
+                resultMap.put("result", "true");
+            else
+                resultMap.put("result", "false");
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         return JSONArray.toJSONString(resultMap);
     }
     @RequestMapping(value="/Juproject.json")
@@ -334,5 +322,135 @@ public class ProjectController {
             e.printStackTrace();
         }
         return JSONArray.toJSONString(resultMap);
+    }
+    @RequestMapping(value = "/projectlist", method = RequestMethod.GET)
+    public String getProjectlist(String projectTitle,@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
+        //获取指定页数据，大小为8
+        PageHelper.startPage(page, 8);
+        //紧跟的第一个select方法被分页
+        List<Project> projectList = projectService.getProjectList(projectTitle);
+        //使用PageInfo包装数据
+        PageInfo<Project> pageInfo = new PageInfo<Project>(projectList);
+        model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("projectList", projectList);
+        return "projectlist";
+    }
+
+
+    public String getProjectllist(String projectTitle,@RequestParam(value = "page", defaultValue = "1") Integer page, Model model) {
+        //获取指定页数据，大小为8
+        PageHelper.startPage(page, 8);
+        //紧跟的第一个select方法被分页
+        List<Project> projectList = projectService.getProjectLiist(projectTitle);
+        //使用PageInfo包装数据
+        PageInfo<Project> pageInfo = new PageInfo<Project>(projectList);
+        model.addAttribute("pageInfo", pageInfo);
+        model.addAttribute("projectList", projectList);
+        return "projectlist";
+    }
+
+    //根据id查看
+    @RequestMapping(value="/sys/projectlist/view/{projectId}",method=RequestMethod.GET)
+    public String view(@PathVariable String projectId, Model model, HttpServletRequest request){
+        logger.debug("projectId id===================== "+projectId);
+        Project project = new Project();
+        try {
+            project =projectService.getProjectById(projectId);
+            logger.debug("wwwwwwwwwwww ");
+            logger.debug("view Pno===================== "+project.getProjectId());
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        model.addAttribute(project);
+        return "projectview";
+    }
+
+
+
+
+    //修改
+    @RequestMapping(value="/sys/projectlist/modify/{projectId}",method=RequestMethod.GET)
+    public String getProjectModify(@PathVariable String projectId,Model model,HttpServletRequest request){
+        logger.debug("getProviderById typeId===================== "+projectId);
+        Project project = new Project();
+        try {
+            project = projectService.getProjectById(projectId);
+        } catch (NumberFormatException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        logger.debug("getProviderById studentId===================== "+project .getProjectId());
+        model.addAttribute(project);
+        return "updateproject";
+    }
+
+    //保存修改
+    @RequestMapping(value="/sys/projectList/modifysave.html",method=RequestMethod.POST)
+    public String modifyProjectSave(Project project) {
+        logger.debug("modifyProjectSave id===================== " + project.getProjectId());
+        try {
+            if (projectService.updateByPrimaryKey(project)) {
+                return "redirect:/projectlist.html";
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "updateproject";
+    }
+
+    //判断是否存在
+    @RequestMapping(value="/sys/projectlist/projectexist.json")
+    @ResponseBody
+    public Object ProgramIsExit(@RequestParam String projectTitle){
+        logger.debug("cnameIsExit cname===================== "+projectTitle);
+        HashMap<String, String> resultMap = new HashMap<String, String>();
+        if(StringUtils.isEmpty(projectTitle)){
+            resultMap.put("projectTitle", "exist");
+        }else{
+            Project project = null;
+            try {
+
+                project =  projectService.selectProjectExist(projectTitle);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            if(null != project)
+                resultMap.put("projectTitle", "exist");
+            else
+                resultMap.put("projectTitle", "noexist");
+        }
+        return JSONArray.toJSONString(resultMap);
+    }
+
+
+
+    //申报项目
+    @RequestMapping(value="/sys/projectlist/add",method=RequestMethod.GET)
+    public String addProject(@ModelAttribute("project") Project project){
+        return "projectadd";
+    }
+
+    //确认添加
+    @RequestMapping(value="/sys/projectlist/addsave",method=RequestMethod.POST)
+    public String addProjectSave(Project project, HttpSession session, HttpServletRequest request){
+        System.out.println("ggg"+project.getProjectTitle());
+        try {
+            if(projectService.insert(project)){
+                return "redirect:/projectlist";
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "projectadd";
     }
 }

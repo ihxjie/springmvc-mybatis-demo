@@ -38,7 +38,7 @@
     <!-- 设置静态资源不过滤 -->
     <mvc:resources mapping="/payfor/assets/**" location="/assets/"/>
     <mvc:resources mapping="/pay/assets/**" location="/assets/"/>
-    <mvc:resources mapping="/view/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/company_view/assets/**" location="/assets/"/>
     <mvc:resources mapping="/rejected/assets/**" location="/assets/"/>
 <!--    <mvc:resources location="/assets/" mapping="/assets/**"/>&lt;!&ndash; 样式 &ndash;&gt;-->
     <!--配置拦截器-->

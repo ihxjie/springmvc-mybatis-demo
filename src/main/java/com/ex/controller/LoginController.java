@@ -1,10 +1,13 @@
 package com.ex.controller;
 
 import com.ex.dao.AdminMapper;
+import com.ex.dao.TeacherMapper;
 import com.ex.model.Admin;
 import com.ex.model.Student;
+import com.ex.model.Teacher;
 import com.ex.service.AdminService;
 import com.ex.service.StudentService;
+import com.ex.service.TeacherService;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -13,22 +16,26 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
 public class LoginController {
     @Resource
     private AdminService adminService;
+    @Resource
     private AdminMapper adminMapper;
     @Resource
     private StudentService studentService;
+    @Resource
+    private TeacherService teacherService;
+    @Resource
+    TeacherMapper teacherMapper;
+
     private Logger logger = Logger.getLogger(LoginController.class);
+
     @RequestMapping(value="/login.html")
-    public String login() {
+    public String login_html() {
         logger.debug("Maser welcome Business==================");
         return "login";
     }
@@ -62,7 +69,38 @@ public class LoginController {
     @RequestMapping("/admin/doRegist")
     public String doRegist(Student student, Model model){
         System.out.println(student.getStudentId());
-         studentService.insert(student);
+        studentService.insert(student);
         return "login";
+    }
+
+    @GetMapping("teacherindex")
+    public String teacherindex(){
+        return "teacherindex";
+    }
+
+    @PostMapping("/teacher_validate")
+    public String stu_validate(String username, String password, Model model, HttpSession session){
+        System.out.println(username);
+
+        Teacher t =  teacherMapper.selectByPrimaryKey(username);
+        System.out.println(t);
+
+        if(t != null && t.getTeacherPwd().equals(password)){
+            session.setAttribute("teacherId", t.getTeacherId());
+            session.setAttribute("teacherName", t.getTeacherName());
+            session.setAttribute("teacherSex", t.getTeacherSex());
+            session.setAttribute("teacherTel", t.getTeacherTel());
+            session.setAttribute("teacherEmail", t.getTeacherEmail());
+            session.setAttribute("introduction", t.getIntroduction());
+            return "teacherindex";
+        }
+
+        model.addAttribute("info", "failed");
+        return "login";
+    }
+
+    @RequestMapping(value="/sys/main.html")
+    public String teacher_main(){
+        return "teacherindex";
     }
 }

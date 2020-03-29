@@ -37,7 +37,7 @@
                             <div class="bg-white border rounded py-2 collapse-inner">
                                 <h6 class="collapse-header">正在审核的项目:</h6>
                                 <c:forEach var="applying" items="${applyingList}">
-                                    <a class="collapse-item" href="${pageContext.request.contextPath}/view/${applying.projectId}">${applying.projectTitle}</a>
+                                    <a class="collapse-item" href="${pageContext.request.contextPath}/company_view/${applying.projectId}">${applying.projectTitle}</a>
                                 </c:forEach>
                                 <h6 class="collapse-header text-danger">被拒绝的项目:</h6>
                                 <c:forEach var="rejected" items="${rejectedList}">
@@ -45,7 +45,7 @@
                                 </c:forEach>
                                 <h6 class="collapse-header text-success">已经审核通过的项目:</h6>
                                 <c:forEach var="passed" items="${passedList}">
-                                    <a class="collapse-item" href="${pageContext.request.contextPath}/view/${passed.projectId}">${passed.projectTitle}</a>
+                                    <a class="collapse-item" href="${pageContext.request.contextPath}/company_view/${passed.projectId}">${passed.projectTitle}</a>
                                 </c:forEach>
 
                             </div>

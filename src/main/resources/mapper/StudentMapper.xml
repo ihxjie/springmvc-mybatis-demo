@@ -17,55 +17,24 @@
     student_tel, student_email, is_delete
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from student
     where student_id = #{studentId,jdbcType=VARCHAR}
   </select>
-
-  <select id = "getStudentList" parameterType="java.lang.String" resultMap="BaseResultMap">
-  		select * from Student
-  	</select>
-  <select id="getStudentById" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from Student
-			where student.student_id=#{student_id}
-	</select>
-  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from student
-	</select>
-  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from Student
-			where student.student_id=#{student_id}
-	</select>
-  <delete id = "delStudentById" parameterType="String">
-  		delete from student where student_id = #{studentId};
-  	</delete>
-  <delete id = "deleteStudent" parameterType="String">
-  		delete from student where student_id = #{studentId};
-  	</delete>
-  <select id="selectStudentExistd" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from Student
-			where student.student_id=#{student_id}
-	</select>
-  <select id="selectEmailExist" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from Student
-			where student.student_email=#{student_email}
-	</select>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from student
     where student_id = #{studentId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Student">
-    insert into student (student_id, student_pwd, student_name, 
-      student_sex, student_major, student_class, 
-      student_tel, student_email, is_delete
-      )
-    values (#{studentId,jdbcType=VARCHAR}, #{studentPwd,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR}, 
-      #{studentSex,jdbcType=VARCHAR}, #{studentMajor,jdbcType=VARCHAR}, #{studentClass,jdbcType=VARCHAR}, 
-      #{studentTel,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}
-      )
+    insert into student (student_id, student_pwd, student_name,
+                         student_sex, student_major, student_class,
+                         student_tel, student_email, is_delete
+    )
+    values (#{studentId,jdbcType=VARCHAR}, #{studentPwd,jdbcType=VARCHAR}, #{studentName,jdbcType=VARCHAR},
+            #{studentSex,jdbcType=VARCHAR}, #{studentMajor,jdbcType=VARCHAR}, #{studentClass,jdbcType=VARCHAR},
+            #{studentTel,jdbcType=VARCHAR}, #{studentEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}
+           )
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Student">
     insert into student
@@ -161,13 +130,42 @@
   <update id="updateByPrimaryKey" parameterType="com.ex.model.Student">
     update student
     set student_pwd = #{studentPwd,jdbcType=VARCHAR},
-      student_name = #{studentName,jdbcType=VARCHAR},
-      student_sex = #{studentSex,jdbcType=VARCHAR},
-      student_major = #{studentMajor,jdbcType=VARCHAR},
-      student_class = #{studentClass,jdbcType=VARCHAR},
-      student_tel = #{studentTel,jdbcType=VARCHAR},
-      student_email = #{studentEmail,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=INTEGER}
+        student_name = #{studentName,jdbcType=VARCHAR},
+        student_sex = #{studentSex,jdbcType=VARCHAR},
+        student_major = #{studentMajor,jdbcType=VARCHAR},
+        student_class = #{studentClass,jdbcType=VARCHAR},
+        student_tel = #{studentTel,jdbcType=VARCHAR},
+        student_email = #{studentEmail,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=INTEGER}
     where student_id = #{studentId,jdbcType=VARCHAR}
   </update>
+  <select id = "getStudentList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Student
+  </select>
+  <select id="getStudentById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Student
+    where student.student_id=#{student_id}
+  </select>
+  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from student
+  </select>
+  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Student
+    where student.student_id=#{student_id}
+  </select>
+  <delete id = "delStudentById" parameterType="String">
+    delete from student where student_id = #{studentId};
+  </delete>
+  <delete id = "deleteStudent" parameterType="String">
+    delete from student where student_id = #{studentId};
+  </delete>
+  <select id="selectStudentExistd" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Student
+    where student.student_id=#{student_id}
+  </select>
+  <select id="selectEmailExist" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from Student
+    where student.student_email=#{student_email}
+  </select>
+
 </mapper>

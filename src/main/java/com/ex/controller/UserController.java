@@ -47,19 +47,6 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/teacher_validate")
-    public String teacher_validate(String username, String password, Model model, HttpSession session){
-
-        Teacher t =  teacherMapper.selectByPrimaryKey(username);
-
-        if(t != null && t.getTeacherPwd().equals(password)){
-
-            return "student";
-        }
-        model.addAttribute("info", "failed");
-        return "login";
-    }
-
     @PostMapping(value = "/company_validate", produces = "text/plain;charset=utf-8")
     public String company_validate(String username, String password, Model model, HttpSession session){
 

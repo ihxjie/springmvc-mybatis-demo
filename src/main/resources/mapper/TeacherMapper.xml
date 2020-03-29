@@ -1,150 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ex.dao.TeacherMapper">
-  <resultMap id="BaseResultMap" type="com.ex.model.Teacher">
-    <id column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
-    <result column="teacher_pwd" jdbcType="VARCHAR" property="teacherPwd" />
-    <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
-    <result column="teacher_sex" jdbcType="VARCHAR" property="teacherSex" />
-    <result column="teacher_tel" jdbcType="VARCHAR" property="teacherTel" />
-    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
-    <result column="teacher_email" jdbcType="VARCHAR" property="teacherEmail" />
-    <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    teacher_id, teacher_pwd, teacher_name, teacher_sex, teacher_tel, introduction, teacher_email,
+    <resultMap id="BaseResultMap" type="com.ex.model.Teacher">
+        <id column="teacher_id" jdbcType="VARCHAR" property="teacherId" />
+        <result column="teacher_pwd" jdbcType="VARCHAR" property="teacherPwd" />
+        <result column="teacher_name" jdbcType="VARCHAR" property="teacherName" />
+        <result column="teacher_sex" jdbcType="VARCHAR" property="teacherSex" />
+        <result column="teacher_tel" jdbcType="VARCHAR" property="teacherTel" />
+        <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+        <result column="teacher_email" jdbcType="VARCHAR" property="teacherEmail" />
+        <result column="is_delete" jdbcType="INTEGER" property="isDelete" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        teacher_id, teacher_pwd, teacher_name, teacher_sex, teacher_tel, introduction, teacher_email,
     is_delete
-  </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from teacher
-    where teacher_id = #{teacherId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from teacher
-    where teacher_id = #{teacherId,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="com.ex.model.Teacher">
-    insert into teacher (teacher_id, teacher_pwd, teacher_name,
-                         teacher_sex, teacher_tel, introduction,
-                         teacher_email, is_delete)
-    values (#{teacherId,jdbcType=VARCHAR}, #{teacherPwd,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
-            #{teacherSex,jdbcType=VARCHAR}, #{teacherTel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR},
-            #{teacherEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.ex.model.Teacher">
-    insert into teacher
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="teacherId != null">
-        teacher_id,
-      </if>
-      <if test="teacherPwd != null">
-        teacher_pwd,
-      </if>
-      <if test="teacherName != null">
-        teacher_name,
-      </if>
-      <if test="teacherSex != null">
-        teacher_sex,
-      </if>
-      <if test="teacherTel != null">
-        teacher_tel,
-      </if>
-      <if test="introduction != null">
-        introduction,
-      </if>
-      <if test="teacherEmail != null">
-        teacher_email,
-      </if>
-      <if test="isDelete != null">
-        is_delete,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="teacherId != null">
-        #{teacherId,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherPwd != null">
-        #{teacherPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherName != null">
-        #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherSex != null">
-        #{teacherSex,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherTel != null">
-        #{teacherTel,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherEmail != null">
-        #{teacherEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        #{isDelete,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Teacher">
-    update teacher
-    <set>
-      <if test="teacherPwd != null">
-        teacher_pwd = #{teacherPwd,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherName != null">
-        teacher_name = #{teacherName,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherSex != null">
-        teacher_sex = #{teacherSex,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherTel != null">
-        teacher_tel = #{teacherTel,jdbcType=VARCHAR},
-      </if>
-      <if test="introduction != null">
-        introduction = #{introduction,jdbcType=VARCHAR},
-      </if>
-      <if test="teacherEmail != null">
-        teacher_email = #{teacherEmail,jdbcType=VARCHAR},
-      </if>
-      <if test="isDelete != null">
-        is_delete = #{isDelete,jdbcType=INTEGER},
-      </if>
-    </set>
-    where teacher_id = #{teacherId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ex.model.Teacher">
-    update teacher
-    set teacher_pwd = #{teacherPwd,jdbcType=VARCHAR},
-        teacher_name = #{teacherName,jdbcType=VARCHAR},
-        teacher_sex = #{teacherSex,jdbcType=VARCHAR},
-        teacher_tel = #{teacherTel,jdbcType=VARCHAR},
-        introduction = #{introduction,jdbcType=VARCHAR},
-        teacher_email = #{teacherEmail,jdbcType=VARCHAR},
-        is_delete = #{isDelete,jdbcType=INTEGER}
-    where teacher_id = #{teacherId,jdbcType=VARCHAR}
-  </update>
-  <select id = "getTeacherList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select * from Teacher
-  </select>
-  <select id="getTeacherById" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select * from Teacher
-    where teacher.teacher_id=#{teacher_id}
-  </select>
-  <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select * from teacher
-  </select>
-  <delete id = "delTeacherById" parameterType="String">
-    delete from teacher where teacher_id = #{teacherId};
-  </delete>
-  <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select * from Teacher
-    where teacher.teacher_id=#{teacher_id}
-  </select>
-  <delete id="deleteTeacher" parameterType="java.lang.String">
-    delete from teacher
-    where teacher_id = #{teacherId,jdbcType=VARCHAR}
-  </delete>
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from teacher
+        where teacher_id = #{teacherId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from teacher
+        where teacher_id = #{teacherId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.ex.model.Teacher">
+        insert into teacher (teacher_id, teacher_pwd, teacher_name,
+                             teacher_sex, teacher_tel, introduction,
+                             teacher_email, is_delete)
+        values (#{teacherId,jdbcType=VARCHAR}, #{teacherPwd,jdbcType=VARCHAR}, #{teacherName,jdbcType=VARCHAR},
+                #{teacherSex,jdbcType=VARCHAR}, #{teacherTel,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR},
+                #{teacherEmail,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ex.model.Teacher">
+        insert into teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                teacher_id,
+            </if>
+            <if test="teacherPwd != null">
+                teacher_pwd,
+            </if>
+            <if test="teacherName != null">
+                teacher_name,
+            </if>
+            <if test="teacherSex != null">
+                teacher_sex,
+            </if>
+            <if test="teacherTel != null">
+                teacher_tel,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="teacherEmail != null">
+                teacher_email,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="teacherId != null">
+                #{teacherId,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherPwd != null">
+                #{teacherPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherName != null">
+                #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null">
+                #{teacherSex,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherTel != null">
+                #{teacherTel,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherEmail != null">
+                #{teacherEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ex.model.Teacher">
+        update teacher
+        <set>
+            <if test="teacherPwd != null">
+                teacher_pwd = #{teacherPwd,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherName != null">
+                teacher_name = #{teacherName,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherSex != null">
+                teacher_sex = #{teacherSex,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherTel != null">
+                teacher_tel = #{teacherTel,jdbcType=VARCHAR},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherEmail != null">
+                teacher_email = #{teacherEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+        </set>
+        where teacher_id = #{teacherId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ex.model.Teacher">
+        update teacher
+        set teacher_pwd = #{teacherPwd,jdbcType=VARCHAR},
+            teacher_name = #{teacherName,jdbcType=VARCHAR},
+            teacher_sex = #{teacherSex,jdbcType=VARCHAR},
+            teacher_tel = #{teacherTel,jdbcType=VARCHAR},
+            introduction = #{introduction,jdbcType=VARCHAR},
+            teacher_email = #{teacherEmail,jdbcType=VARCHAR},
+            is_delete = #{isDelete,jdbcType=INTEGER}
+        where teacher_id = #{teacherId,jdbcType=VARCHAR}
+    </update>
+    <select id = "getTeacherList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from Teacher
+    </select>
+    <select id="getTeacherById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from Teacher
+        where teacher.teacher_id=#{teacher_id}
+    </select>
+    <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from teacher
+    </select>
+    <delete id = "delTeacherById" parameterType="String">
+        delete from teacher where teacher_id = #{teacherId};
+    </delete>
+    <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from Teacher
+        where teacher.teacher_id=#{teacher_id}
+    </select>
+    <delete id="deleteTeacher" parameterType="java.lang.String">
+        delete from teacher
+        where teacher_id = #{teacherId,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="updatePwd" parameterType="java.lang.String">
+        update teacher set teacher_pwd=#{teacherPwd} where teacher_id=#{teacherId}
+    </update>
+
+    <select id="getLoginTeacher" resultType="com.ex.model.Teacher">
+        select * from teacher
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="teacher_id != null">
+                and teacher.teacher_id = #{teacher_id}
+            </if>
+        </trim>
+    </select>
 </mapper>

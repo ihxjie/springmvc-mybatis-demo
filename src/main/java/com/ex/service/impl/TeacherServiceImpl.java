@@ -13,6 +13,8 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService {
     @Resource
     TeacherMapper teacherMapper;
+    @Resource
+    TeacherMapper teachermapper;
 
     @Override
     public List<Teacher> getTeacherList() {
@@ -33,33 +35,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher getTeacherById(String teacherId) {
-        return teacherMapper.getTeacherById(teacherId);
-    }
-
-    @Override
-    public boolean updateByPrimaryKey(Teacher teacher) {
-        boolean flag = false;
-        int x;
-
-        x=teacherMapper.updateByPrimaryKey(teacher);
-        System.out.println("x= ======================================="+x);
-        if(x>0)
-            flag = true;
-        return flag;
-    }
-
-    @Override
     public List<Teacher> queryExcelInfo() {
         return teacherMapper.queryExcelInfo();
-    }
-
-    @Override
-    public boolean insert(Teacher record) {
-        boolean flag = false;
-        if(teacherMapper.insert(record) > 0)
-            flag = true;
-        return flag;
     }
 
     @Override
@@ -77,4 +54,43 @@ public class TeacherServiceImpl implements TeacherService {
         teacherList = teacherMapper.selectId(teacherId);
         return teacherList;
     }
+
+    @Override
+    public boolean updateByPrimaryKeySelective(Teacher record) {
+        return false;
+    }
+
+    @Override
+    public boolean updateByPrimaryKey(Teacher teacher) {
+        boolean flag = false;
+        int x;
+
+        x=teachermapper.updateByPrimaryKey(teacher);
+        System.out.println("x= ======================================="+x);
+        if(x>0)
+            flag = true;
+        return flag;
+    }
+
+    @Override
+    public boolean updatePwd(String teacherId, String teacherPwd) {
+        boolean flag = false;
+        if(teachermapper.updatePwd(teacherId, teacherPwd) > 0)
+            flag = true;
+        return flag;
+    }
+
+    @Override
+    public boolean insert(Teacher record) {
+        boolean flag = false;
+        if(teachermapper.insert(record) > 0)
+            flag = true;
+        return flag;
+    }
+
+    @Override
+    public Teacher getTeacherById(String teacherId) {
+        return teachermapper.getTeacherById(teacherId);
+    }
+
 }

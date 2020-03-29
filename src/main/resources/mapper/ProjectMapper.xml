@@ -168,13 +168,13 @@
     </update>
 
     <!--管理员管理项目-->
-    <select id = "getProjectList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="getProjectLists" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select * from Project
     </select>
     <select id="queryExcelInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from project
     </select>
-    <delete id = "delProjectById" parameterType="Integer">
+    <delete id="delProjectById" parameterType="Integer">
         delete from project where project_id = #{projectId};
     </delete>
     <select id="selectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -186,5 +186,39 @@
         <include refid="Base_Column_List" />
         from project
         where project_id = #{projectId,jdbcType=INTEGER}
+    </select>
+    <select id="getProjectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from Project
+        where project.project_id=#{project_id}
+    </select>
+
+
+    <select id="getProjectByWorkId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select p.*
+        from Project p
+        where p.is_company=0
+        group by p.work_id
+        order by project_id
+    </select>
+
+
+    <select id="getProject" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from Project
+        where project.project_title=#{project_title}
+    </select>
+
+    <select id="getProjectList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from Project
+        where project.status=1 and project.is_company=1
+    </select>
+
+    <select id = "getProjectLiist" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select *
+        from Project
+        where project.status=1 and project.is_company=0
+    </select>
+
+    <select id="getProjectCount" resultType="java.lang.Integer">
+        select count(0) from project
     </select>
 </mapper>

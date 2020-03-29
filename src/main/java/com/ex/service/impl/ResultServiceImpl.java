@@ -13,6 +13,8 @@ import java.util.List;
 public class ResultServiceImpl implements ResultService {
     @Resource
     ResultMapper  resultMapper;
+    @Resource
+    ResultService resultService;
 
 
     @Override
@@ -25,7 +27,7 @@ public class ResultServiceImpl implements ResultService {
 
     @Override
     public Result getResultById(String studentId) {
-        return resultMapper.getResultById(studentId);
+        return resultMapper.getResultByStudentId(studentId);
     }
 
     @Override
@@ -59,5 +61,53 @@ public class ResultServiceImpl implements ResultService {
         List<Result> resultList = null;
         resultList =resultMapper.selectId(studentId);
         return resultList;
+    }
+
+    @Override
+    public List<Result> getResultListProjectId(String studentId) {
+        return resultMapper.getResultListProjectId(studentId);
+    }
+
+    @Override
+    public List<Result> getResultList(String studentName) {
+        return resultMapper.getResultList();
+    }
+
+    @Override
+    public List<Result> getApplyListStudentId(String studentId) {
+        return null;
+    }
+
+    @Override
+    public Result getResultById(Integer resultId) {
+        return resultMapper.getResultById(resultId);
+    }
+
+    @Override
+    public Result getResult(String studentName) {
+        return resultMapper.getResult(studentName);
+    }
+
+    @Override
+    public List<Result> getResultByProjectId(Integer projectId) {
+        return resultMapper.getResultByProjectId(projectId);
+    }
+
+    @Override
+    public boolean getResultCountbyProjectId(Integer projectId) {
+        return false;
+    }
+
+    @Override
+    public List<Result> queryExcelInfooo() {
+        return resultMapper.queryExcelInfooo();
+    }
+
+    @Override
+    public boolean insert(Result record) {
+        boolean flag = false;
+        if(resultMapper.insert(record) > 0)
+            flag = true;
+        return flag;
     }
 }

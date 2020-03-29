@@ -79,6 +79,17 @@ public class Project {
         return projectPrice;
     }
 
+    public void setProjectPrice(String projectPrice) {
+        this.projectPrice = projectPrice == null ? null : projectPrice.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
     @Override
     public String toString() {
         return "Project{" +
@@ -92,17 +103,5 @@ public class Project {
                 ", projectPrice='" + projectPrice + '\'' +
                 ", status=" + status +
                 '}';
-    }
-
-    public void setProjectPrice(String projectPrice) {
-        this.projectPrice = projectPrice == null ? null : projectPrice.trim();
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 }

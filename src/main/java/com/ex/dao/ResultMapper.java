@@ -22,11 +22,23 @@ public interface ResultMapper {
 
     List<Result> getResultList();//
 
-    Result getResultById(String studentId);//
+    Result getResultByStudentId(String studentId);//
 
     List<Result> queryExcelInfo();//导表
 
     int delResultById(String resultId);//批量删除
 
     List<Result> selectId(String studentId);//查询
+
+    List<Result> getResultListProjectId(String studentId);
+
+    Result getResultById(Integer resultId);
+
+    Result getResult(String studentName);
+
+    List<Result> getResultByProjectId(Integer projectId);
+
+    int getResultCountbyProjectId(Integer projectId);
+
+    List<Result> queryExcelInfooo();
 }

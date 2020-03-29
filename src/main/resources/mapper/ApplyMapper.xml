@@ -31,12 +31,12 @@
     where apply_id = #{applyId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.ex.model.Apply">
-    insert into apply (apply_id, project_id, person_id, 
-      person_name, status, is_student
-      )
-    values (#{applyId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{personId,jdbcType=VARCHAR}, 
-      #{personName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isStudent,jdbcType=INTEGER}
-      )
+    insert into apply (apply_id, project_id, person_id,
+                       person_name, status, is_student
+    )
+    values (#{applyId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{personId,jdbcType=VARCHAR},
+            #{personName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{isStudent,jdbcType=INTEGER}
+           )
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Apply">
     insert into apply
@@ -127,7 +127,7 @@
     from apply
     where apply_id = #{applyId,jdbcType=INTEGER}
   </select>
-  <select id = "getApplyList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="getApplyList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select * from Apply
   </select>
   <select id="queryExcelInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -152,6 +152,39 @@
   </select>
   <select id="getTeacherApply" parameterType="String" resultMap="BaseResultMap">
     select * from apply where project_id = ${projectId} and is_student = 0
+  </select>
+
+  <select id="getApplyListStudent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.*
+    from apply a
+    where a.status=1 and a.is_student=1
+  </select>
+
+  <select id="getApplyListByPersonName" parameterType="java.lang.Integer" resultType="com.ex.model.Apply">
+    select a.*,p.project_title
+    from apply a,project p
+    where a.project_id=p.project_id and a.is_student=0 and a.person_name like CONCAT ('%',#{personName},'%')
+    order by apply.apply_id DESC
+  </select>
+
+  <select id="getApplyByProjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.*,p.project_title
+    from apply a,project p
+    where a.project_id=p.project_id and a.is_student=1 and  a.project_id=#{project_id}
+    order by a.apply_id ASC
+  </select>
+
+  <select id="getApplyById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select a.*,p.project_title
+    from apply a,project p
+    where a.project_id=p.project_id and apply_id = #{applyId,jdbcType=INTEGER}
+    order by a.apply_id
+  </select>
+
+
+  <select id="queryExcel" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from apply
+    where is_student=1 and status=1
   </select>
 
 </mapper>

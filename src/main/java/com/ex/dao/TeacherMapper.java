@@ -25,7 +25,11 @@ public interface TeacherMapper {
 
     List<Teacher> queryExcelInfo();
 
-    public int delTeacherById(String teacherId);
+    int delTeacherById(String teacherId);
 
     List<Teacher> selectId(String teacherId);
+
+    int updatePwd(String teacherId, String teacherPwd);
+
+    Teacher getLoginTeacher(String teacherId);
 }

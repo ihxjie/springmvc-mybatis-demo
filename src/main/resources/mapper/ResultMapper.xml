@@ -102,10 +102,10 @@
             project_id = #{projectId,jdbcType=INTEGER}
         where result_id = #{resultId,jdbcType=INTEGER}
     </update>
-    <select id = "getResultList" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id = "getResultList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select * from result
     </select>
-    <select id="getResultById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <select id="getResultByStudentId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from result
         where result.student_id=#{student_id}
     </select>
@@ -118,6 +118,44 @@
     <select id="selectId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from result
         where result.student_id=#{studentId}
+    </select>
+    <select id="getResultByProjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select r.*
+        from result r,apply a
+        where  r.project_id=#{project_id} and r.student_id=a.person_id and a.is_student=1 and a.status=1
+        order by r.result_id  asc
+    </select>
+
+    <select id="getResultCountbyProjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select count(1) from result r
+        where  r.project_id=#{project_id}
+    </select>
+
+
+    <select id="getResultById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select r.*
+        from result r
+        where  r.result_id=#{result_id}
+    </select>
+
+    <select id="getResult" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select * from result r
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="student_name != null">
+                and r.student_name = #{student_name}
+            </if>
+        </trim>
+    </select>
+
+    <select id="getResultListProjectId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select r.*
+        from result r
+        order by r.result_id
+    </select>
+
+    <select id="queryExcelInfooo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select r.*
+        from result r
     </select>
 
 </mapper>

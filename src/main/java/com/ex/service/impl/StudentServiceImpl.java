@@ -52,8 +52,6 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.queryExcelInfo();
     }
 
-
-
     @Override
     public boolean insert(Student record) {
         boolean flag = false;
@@ -88,6 +86,27 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectEmailExist(studentEmail);
     }
 
+    @Override
+    public boolean deleteByPrimaryKey(String studentId) {
+        boolean flag = false;
+        if(studentMapper.deleteByPrimaryKey(studentId)>0) {
+            flag = true;
+        } else {
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public Student updateByPrimaryKeySelective(Integer studentId) {
+        return null;
+
+    }
+
+    @Override
+    public Student selectByPrimaryKey(String studentId) {
+        return null;
+    }
 
 
 }

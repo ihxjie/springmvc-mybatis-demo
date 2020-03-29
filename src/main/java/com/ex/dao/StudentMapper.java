@@ -32,4 +32,5 @@ public interface StudentMapper {
     Student selectStudentExist(String studentId);
 
     Student selectEmailExist(String studentEmail);
+
 }

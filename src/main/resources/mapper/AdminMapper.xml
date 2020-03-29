@@ -22,9 +22,9 @@
   </delete>
   <insert id="insert" parameterType="com.ex.model.Admin">
     insert into admin (admin_id, admin_pwd
-      )
+    )
     values (#{adminId,jdbcType=VARCHAR}, #{adminPwd,jdbcType=VARCHAR}
-      )
+           )
   </insert>
   <insert id="insertSelective" parameterType="com.ex.model.Admin">
     insert into admin
@@ -61,13 +61,13 @@
     set admin_pwd = #{adminPwd,jdbcType=VARCHAR}
     where admin_id = #{adminId,jdbcType=VARCHAR}
   </update>
-<!--管理员登录-->
+  <!--管理员登录-->
   <select id="getLoginAdmin" parameterType="java.lang.String" resultMap="BaseResultMap" >
     select * from admin where admin_id=#{adminId,jdbcType=VARCHAR}
   </select>
   <select id="getAdminById" parameterType="java.lang.String" resultMap="BaseResultMap">
-		select * from Admin
-			where admin.admin_id=#{admin_id}
+    select * from Admin
+    where admin.admin_id=#{admin_id}
   </select>
 
 </mapper>

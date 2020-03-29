@@ -37,4 +37,23 @@ public interface ApplyMapper {
     int delApplyById(Integer applyId);
 
     List<Apply> selectId(Integer applyId);//根据id进行查询在该页面显示
+
+    List<Apply> getApplyListByPersonName(String personName);
+
+    List<Apply> getApplyListStudent(Integer projectId);
+
+    Apply getApply(Integer applyId);
+
+    Apply getApplyById(String personId);
+
+    List<Apply> getApplyByProjectId(Integer projectId);
+
+    int getApplyCountByProjectId(Integer projectId);
+
+    int getApplyCount();
+
+    List<Apply> getApplyByProjectIdIspay(Integer projectId);
+
+    List<Apply> queryExcel();
+
 }
